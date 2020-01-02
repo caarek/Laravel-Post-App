@@ -21,32 +21,66 @@
 <body>
     <div id="app">
 
-        <nav class="card position-fixed h-100">
-            <div class="card-header px-3">
-                <h6><b>L</b>aravel</h6>
-                <h6><b>P</b>ost</h6>
-                <h6><b>A</b>pp</h6>
+        <!--Navbar -->
+        <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color-dark">
+            <a class="navbar-brand" href="{{ url('/') }}">
+                <b>L</b>aravel<b>P</b>ost<b>A</b>pp
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
+                    aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
+                <ul class="navbar-nav mr-auto">
+
+                    @guest
+                        <li class="nav-item">
+                            <a href="{{ url('/') }}" class="nav-link">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/login') }}" class="nav-link">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    @endguest
+
+                    @auth
+                        <li class="nav-item">
+                            <a href="{{ url('/') }}" class="nav-link">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-bell"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">
+                                <i class="fas fa-cog" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ url('/logout') }}" class="nav-link">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    @endauth
+                </ul>
+                @auth
+                    <ul class="navbar-nav ml-auto nav-flex-icons">
+                        <li class="nav-item">
+                            <a href="{{route('profile.show', ['username' => Auth::user()->name])}}" class="nav-link">
+                                <i class="fas fa-user" aria-hidden="true"></i>  {{ Auth::user()->name }}
+                            </a>
+                        </li>
+                    </ul>
+                @endauth
             </div>
-
-            @guest
-                <div class="card-body d-flex flex-column">
-                    <a href="{{ url('/') }}" class="btn btn-info waves-effect px-3"><i class="fas fa-home" aria-hidden="true"></i></a>
-                    <a href="{{ url('/login') }}" class="btn btn-success waves-effect px-3"><i class="fas fa-sign-out-alt" aria-hidden="true"></i></a>
-                </div>
-            @endguest
-
-            @auth
-                <div class="card-body d-flex flex-column">
-                    <a href="{{ url('/') }}" class="btn btn-info waves-effect px-3"><i class="fas fa-home" aria-hidden="true"></i></a>
-                    <a href="{{route('profile.show', ['username' => Auth::user()->name])}}" class="btn btn-info waves-effect px-3"><i class="fas fa-user" aria-hidden="true"></i></a>
-                    <a class="btn btn-info waves-effect px-3 mb-5"><i class="fas fa-cog" aria-hidden="true"></i></a>
-
-                    <button type="button" class="btn btn-outline-info waves-effect px-3"><i class="fas fa-bell"></i></button>
-
-                    <a href="{{ url('/logout') }}" class="btn btn-danger mt-auto waves-effect px-3 mt-5"><i class="fas fa-sign-out-alt" aria-hidden="true"></i></a>
-                </div>
-            @endauth
         </nav>
+        <!--/.Navbar -->
 
         <main class="py-4">
             @yield('content')
