@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,25 +14,28 @@
 |
 */
 
-Auth::routes();
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/logout', 'LoginController@logout');
+Route::get('/', [HomeController::class, 'show']);
 
-Route::get('/post/new', 'PostController@new');
+//Route::get('/logout', 'LoginController@logout');
+//
+//Route::get('/post/new', 'PostController@new');
+//
+//Route::post('/post/add', 'PostController@add');
+//
+//Route::delete('/post/remove/{id}', 'PostController@remove')->name('post.remove');
+//
+//Route::get('/post/{id}', 'PostController@show')->name('post.show');
+//
+//Route::get('/profile/{username}', 'ProfileController@show')->name('profile.show');
+//
+//Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/post/add', 'PostController@add');
-
-Route::delete('/post/remove/{id}', 'PostController@remove')->name('post.remove');
-
-Route::get('/post/{id}', 'PostController@show')->name('post.show');
-
-Route::get('/profile/{username}', 'ProfileController@show')->name('profile.show');
-
-
-
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+require __DIR__.'/auth.php';
